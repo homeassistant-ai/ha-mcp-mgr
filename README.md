@@ -4,15 +4,18 @@ A persona-driven management system for [ha-mcp](https://github.com/homeassistant
 
 ## Overview
 
-This repository provides automated weekly reviews of ha-mcp using 10 specialized AI personas, each focusing on different aspects of the project. The system produces a prioritized backlog through simulated stakeholder meetings.
+This repository provides automated weekly reviews of ha-mcp using **11 specialized AI personas**, each focusing on different aspects of the project. The system produces a prioritized backlog through simulated stakeholder meetings.
 
 **Key Features:**
+- UAT test environment for safe testing (ha-mcp-uat-server.qc-h.net)
 - MCP server access for testing ha-mcp functionality
 - Self-evolving personas with deliverables and beliefs
+- GitHub Pages metrics dashboard
 - Comprehensive GitHub integration (issues, PRs, discussions)
-- Persona capability request workflow
+- Issue linking to ha-mcp with auto-assignment
+- Cross-meeting context preservation
+- Auto memory pruning for old files
 - Auto-commit and push at meeting end
-- Submodule commit tracking for meeting history
 
 ## Quick Start
 
@@ -22,13 +25,18 @@ git clone https://github.com/homeassistant-ai/ha-mcp-mgr.git
 cd ha-mcp-mgr
 git submodule update --init
 
-# Set HA credentials for MCP testing
-export HOMEASSISTANT_URL="https://your-ha:8123"
-export HOMEASSISTANT_TOKEN="your_token"
+# First-time setup (comprehensive bootstrap)
+./scripts/first-meeting.sh
 
-# Run weekly review
+# Or for subsequent weekly reviews
 ./scripts/run-weekly-review.sh
 ```
+
+## Dashboard
+
+View the metrics dashboard at: **https://homeassistant-ai.github.io/ha-mcp-mgr/**
+
+Regenerate manually: `./scripts/generate-dashboard.sh`
 
 ## Personas
 
@@ -44,62 +52,108 @@ export HOMEASSISTANT_TOKEN="your_token"
 | **Marketing/Comm** | Adoption, metrics | Metrics dashboard |
 | **Security Analyst** | Vulnerabilities | Security checklist |
 | **Community Manager** | Issues, docs | FAQ, issue patterns |
+| **Retrospective** | Process improvement | Decision tracking |
 
 ## Structure
 
 ```
 ha-mcp-mgr/
-├── .mcp.json           # MCP server config (ha-mcp)
-├── personas/           # 10 persona folders with self-evolving context
+├── .mcp.json              # MCP server config (UAT + custom)
+├── config.json            # System configuration
+├── personas/              # 11 persona folders
 │   └── [persona]/
-│       ├── CLAUDE.md   # Persona instructions
-│       ├── beliefs.md  # Evolving observations
+│       ├── CLAUDE.md      # Persona instructions
+│       ├── beliefs.md     # Evolving observations
 │       ├── deliverables/  # Active documents
-│       ├── archive/    # Completed items
-│       ├── notes/      # Meeting notes
-│       └── reports/    # Weekly reports
+│       ├── archive/       # Completed items
+│       ├── notes/         # Working notes
+│       └── reports/       # Weekly reports
 ├── backlog/
-│   ├── current.md      # Active backlog
-│   └── archive/        # Historical backlogs
-├── meetings/weekly/    # Meeting notes and metrics
+│   ├── current.md         # Active backlog
+│   └── archive/           # Historical backlogs
+├── meetings/
+│   ├── weekly/            # Meeting notes and metrics
+│   └── context.md         # Cross-meeting context
 ├── docs/
-│   ├── TOOLING.md      # Tool reference with examples
+│   ├── dashboard/         # GitHub Pages dashboard
+│   ├── TOOLING.md         # Tool reference
 │   └── PERSONA-COMMON.md  # Common capabilities
-├── scripts/            # Automation scripts
-├── .claude/commands/   # Claude Code slash commands
-└── ha-mcp/             # Submodule (commit = meeting timestamp)
+├── scripts/               # Automation scripts
+├── .github/workflows/     # GitHub Actions
+└── ha-mcp/                # Submodule (commit = meeting timestamp)
 ```
+
+## Scripts
+
+```bash
+# First-time comprehensive analysis
+./scripts/first-meeting.sh
+
+# Weekly review (subsequent meetings)
+./scripts/run-weekly-review.sh
+
+# Single persona analysis
+./scripts/run-persona.sh tech-lead
+
+# Collect metrics only
+./scripts/collect-metrics.sh
+
+# Generate/update dashboard
+./scripts/generate-dashboard.sh
+
+# Prune old persona files
+./scripts/prune-old-files.sh
+
+# Link/search issues
+./scripts/link-issues.sh search "keyword"
+./scripts/link-issues.sh create-mgr "Title" "Body" "label"
+```
+
+## Test Environment
+
+UAT environment available for safe testing:
+- **URL**: https://ha-mcp-uat-server.qc-h.net
+- **Token**: `demo` (gets replaced with real token)
+
+Configured in `.mcp.json` as `ha-mcp-uat`.
 
 ## Weekly Process
 
 1. **Pre-Flight**: Update ha-mcp submodule (commit = meeting timestamp)
 2. **Metrics**: Collect GitHub, PyPI, Docker stats
-3. **Persona Reviews**: All 9 personas analyze ha-mcp in parallel
+3. **Persona Reviews**: All 10 personas analyze ha-mcp in parallel
 4. **Coordination**: Julz synthesizes, resolves conflicts, asks follow-ups
-5. **Backlog**: Prioritized items added to `backlog/current.md`
-6. **Commit & Push**: All changes committed with ha-mcp commit reference
+5. **Retrospective**: Process health check
+6. **Backlog**: Prioritized items with issue linking
+7. **Context**: Update cross-meeting context
+8. **Dashboard**: Regenerate metrics
+9. **Commit & Push**: All changes with ha-mcp commit reference
 
-## Running Reviews
+## Issue Management
 
+### Auto-Assignment
+All created issues are assigned to `julienld` for email notification.
+
+### Issue Linking
 ```bash
-# Full weekly review
-./scripts/run-weekly-review.sh
+# Search existing ha-mcp issues
+./scripts/link-issues.sh search "authentication"
 
-# Single persona
-./scripts/run-persona.sh tech-lead
-
-# Collect metrics only
-./scripts/collect-metrics.sh
+# Create linked issue
+./scripts/link-issues.sh create-hamcp "Feature title" "Body" "enhancement"
 ```
 
-## Persona Capabilities
+## Memory Management
 
-Each persona can:
-- **Test ha-mcp** via the configured MCP server
-- **Check GitHub** for issues, PRs, discussions
-- **See other personas** via git status
-- **Track their history** via git log
-- **Request new tools** by documenting in reports (Julz approves)
+Automatic pruning of old files (configurable in `config.json`):
+- Reports: Keep 12 weeks
+- Notes: Keep 8 weeks
+- Meeting files: Archive after 6 months
+
+## GitHub Actions
+
+- **dashboard.yml**: Auto-update dashboard on meeting commits
+- **weekly-review.yml**: Monday reminder issue (assigned to julienld)
 
 ## Priority Levels
 
@@ -110,40 +164,11 @@ Each persona can:
 | **P2** | Medium - improvements, enhancements |
 | **P3** | Low - polish, future considerations |
 
-## Julz's Authority
-
-The Julz coordinator has significant latitude:
-- Ask follow-up questions to any persona
-- Override individual priorities for project benefit
-- Approve/reject persona capability requests
-- Make final decisions with documented rationale
-
-## Self-Evolution
-
-Personas update their own context files:
-- `beliefs.md` - Observations and learnings over time
-- `CLAUDE.md` - Refined instructions based on experience
-- `deliverables/` - Active documents, archived when complete
-
-## MCP Server Testing
-
-Configure HA credentials:
-```bash
-export HOMEASSISTANT_URL="https://your-ha:8123"
-export HOMEASSISTANT_TOKEN="your_long_lived_token"
-```
-
-Personas can then test ha-mcp tools like:
-- `ha_search_entities`, `ha_call_service`
-- `ha_create_automation`, `ha_control_device`
-- All 88 ha-mcp tools
-
 ## Requirements
 
 - [Claude Code CLI](https://github.com/anthropics/claude-code) (`claude` command)
 - GitHub CLI (`gh`) - authenticated
 - Bash shell
-- Home Assistant instance (for MCP testing)
 
 ## License
 

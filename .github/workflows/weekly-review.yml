@@ -1,0 +1,62 @@
+name: Weekly Review Reminder
+
+on:
+  # Trigger on Monday mornings
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+jobs:
+  reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create reminder issue
+        run: |
+          # Check if reminder issue already exists this week
+          EXISTING=$(gh issue list -R homeassistant-ai/ha-mcp-mgr \
+            --label "weekly-review" \
+            --state open \
+            --json number \
+            --jq 'length')
+
+          if [ "$EXISTING" -eq "0" ]; then
+            gh issue create \
+              --title "Weekly Review - $(date +%Y-%m-%d)" \
+              --body "## Weekly Review Reminder
+
+It's time to run the weekly ha-mcp management review.
+
+### To Run
+
+\`\`\`bash
+cd ha-mcp-mgr
+./scripts/run-weekly-review.sh
+\`\`\`
+
+Or for the first time:
+\`\`\`bash
+./scripts/first-meeting.sh
+\`\`\`
+
+### Checklist
+- [ ] Update ha-mcp submodule
+- [ ] Collect metrics
+- [ ] Run all persona analyses
+- [ ] Coordination meeting
+- [ ] Update backlog
+- [ ] Commit and push
+
+---
+*Auto-generated reminder*" \
+              --label "weekly-review" \
+              --assignee "julienld"
+
+            echo "Reminder issue created"
+          else
+            echo "Reminder issue already exists"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}

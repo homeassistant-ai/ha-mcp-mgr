@@ -2,25 +2,41 @@
   "project": {
     "name": "ha-mcp-mgr",
     "description": "Management system for ha-mcp",
-    "managed_repo": "homeassistant-ai/ha-mcp"
+    "managed_repo": "homeassistant-ai/ha-mcp",
+    "mgr_repo": "homeassistant-ai/ha-mcp-mgr"
   },
   "schedule": {
     "frequency": "weekly",
     "day": "monday",
     "note": "Can be changed to 'daily' or 'twice-weekly' in the future"
   },
+  "test_environment": {
+    "url": "https://ha-mcp-uat-server.qc-h.net",
+    "token": "demo",
+    "note": "UAT environment for persona testing"
+  },
   "personas": [
     "julz",
     "tech-lead",
     "product-owner",
     "ux-designer",
-    "simple-user",
+    "home-user",
     "advanced-user",
     "sre",
     "marketing-comm",
     "security-analyst",
-    "community-manager"
+    "community-manager",
+    "retrospective"
   ],
+  "issue_assignment": {
+    "default_assignee": "julienld",
+    "notify_email": true
+  },
+  "memory_limits": {
+    "reports_keep_weeks": 12,
+    "notes_keep_weeks": 8,
+    "auto_prune": true
+  },
   "metrics": {
     "github": {
       "enabled": true,
@@ -33,6 +49,11 @@
     "docker": {
       "enabled": true,
       "image": "ghcr.io/homeassistant-ai/ha-mcp"
+    },
+    "dashboard": {
+      "enabled": true,
+      "github_pages": true,
+      "path": "docs/dashboard"
     }
   },
   "priorities": {

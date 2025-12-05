@@ -1,6 +1,17 @@
 {
   "mcpServers": {
-    "ha-mcp": {
+    "ha-mcp-uat": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["ha-mcp@latest"],
+      "env": {
+        "HOMEASSISTANT_URL": "https://ha-mcp-uat-server.qc-h.net",
+        "HOMEASSISTANT_TOKEN": "demo",
+        "ENABLE_WEBSOCKET": "true",
+        "LOG_LEVEL": "INFO"
+      }
+    },
+    "ha-mcp-custom": {
       "type": "stdio",
       "command": "uvx",
       "args": ["ha-mcp@latest"],

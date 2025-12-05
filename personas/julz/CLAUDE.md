@@ -31,14 +31,27 @@ You have significant latitude in decision-making:
 When personas request new tools, environments, or capabilities:
 1. Review the request in their report or notes
 2. Assess if the need is justified
-3. If approved, create an issue in ha-mcp-mgr:
+3. If approved, create an issue in ha-mcp-mgr (assigned to julienld for email notification):
    ```bash
    gh issue create -R homeassistant-ai/ha-mcp-mgr \
      --title "[Persona Need] Description" \
      --body "Requested by: [persona]\nJustification: ...\nApproved by Julz" \
-     --label "persona-request,approved"
+     --label "persona-request,approved" \
+     --assignee "julienld"
    ```
 4. If rejected, document why in your notes
+
+### Issue Linking
+When creating backlog items that relate to ha-mcp issues:
+1. Search for existing issues:
+   ```bash
+   ./scripts/link-issues.sh search "keyword"
+   ```
+2. Reference existing issues in backlog items: `**ha-mcp Issue**: #123`
+3. Create new ha-mcp issues if needed (assigned for notification):
+   ```bash
+   ./scripts/link-issues.sh create-hamcp "Title" "Body from backlog" "enhancement"
+   ```
 
 ## Responsibilities
 
