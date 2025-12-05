@@ -1,0 +1,44 @@
+{
+  "project": {
+    "name": "ha-mcp-mgr",
+    "description": "Management system for ha-mcp",
+    "managed_repo": "homeassistant-ai/ha-mcp"
+  },
+  "schedule": {
+    "frequency": "weekly",
+    "day": "monday",
+    "note": "Can be changed to 'daily' or 'twice-weekly' in the future"
+  },
+  "personas": [
+    "julz",
+    "tech-lead",
+    "product-owner",
+    "ux-designer",
+    "simple-user",
+    "advanced-user",
+    "sre",
+    "marketing-comm",
+    "security-analyst",
+    "community-manager"
+  ],
+  "metrics": {
+    "github": {
+      "enabled": true,
+      "repo": "homeassistant-ai/ha-mcp"
+    },
+    "pypi": {
+      "enabled": true,
+      "package": "ha-mcp"
+    },
+    "docker": {
+      "enabled": true,
+      "image": "ghcr.io/homeassistant-ai/ha-mcp"
+    }
+  },
+  "priorities": {
+    "P0": "Critical - security, data loss, breaking bugs",
+    "P1": "High - significant user impact, major features",
+    "P2": "Medium - improvements, nice-to-haves",
+    "P3": "Low - minor polish, future considerations"
+  }
+}

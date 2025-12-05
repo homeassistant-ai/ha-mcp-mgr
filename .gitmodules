@@ -1,0 +1,3 @@
+[submodule "ha-mcp"]
+	path = ha-mcp
+	url = https://github.com/homeassistant-ai/ha-mcp.git
