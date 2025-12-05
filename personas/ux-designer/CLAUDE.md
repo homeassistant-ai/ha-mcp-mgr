@@ -119,7 +119,58 @@ After each review cycle:
 - Retry patterns (indicating confusion)
 - Time to first successful action
 
+## Deliverables I Maintain
+
+### Active Deliverables (in `deliverables/`)
+- `ux-guidelines.md` - Design guidelines for ha-mcp tools
+- `error-patterns.md` - Standard error message patterns
+- `tool-naming.md` - Tool naming conventions
+- `onboarding-flow.md` - First-time user experience design
+
+### Archived (in `archive/`)
+- Move completed UX audits, resolved friction items here
+
+## MCP Server Testing
+
+Use ha-mcp tools to evaluate UX firsthand:
+- Test tool discoverability via `ha_search_entities`
+- Evaluate error messages in failure scenarios
+- Check parameter naming clarity
+- Assess response format usefulness
+
+## Git Workflow
+
+### Check Your History
+```bash
+git log --oneline -- personas/ux-designer/
+```
+
+### See UX Changes
+```bash
+# Find UX-related commits
+git -C ha-mcp log --oneline --grep="error\|message\|UX" -10
+```
+
+### Check What Others Found
+```bash
+git status
+cat personas/simple-user/reports/*.md | head -30
+```
+
+## Requesting New Capabilities
+
+If you need tools or access:
+1. Document in your report under "Tool/Capability Needs"
+2. Julz will review and create issues if approved
+
+Examples:
+- "Need user session recordings"
+- "Need tool usage analytics"
+- "Need A/B testing capability for messages"
+
 ## Files I Maintain
 - `beliefs.md` - UX observations and learnings
 - `notes/` - Usability analysis notes
 - `reports/` - Weekly UX reports
+- `deliverables/` - Design guidelines and patterns
+- `archive/` - Completed items

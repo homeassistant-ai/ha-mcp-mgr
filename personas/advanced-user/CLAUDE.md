@@ -143,7 +143,59 @@ After each review cycle:
 - Workarounds required count
 - Feature request resolution rate
 
+## Deliverables I Maintain
+
+### Active Deliverables (in `deliverables/`)
+- `api-coverage.md` - HA API coverage tracking
+- `advanced-workflows.md` - Complex workflow documentation
+- `limitations.md` - Known limitations and workarounds
+- `integration-ideas.md` - Future integration opportunities
+
+### Archived (in `archive/`)
+- Move resolved limitations, implemented features here
+
+## MCP Server Testing
+
+Extensively test ha-mcp power features:
+- Complex automation creation
+- Bulk device operations
+- Template evaluation edge cases
+- Multi-step workflows
+- Error recovery scenarios
+
+## Git Workflow
+
+### Check Your History
+```bash
+git log --oneline -- personas/advanced-user/
+```
+
+### Track API Changes
+```bash
+# See tool additions/changes
+git -C ha-mcp log --oneline -- src/ha_mcp/tools/ -20
+```
+
+### Check What Others Found
+```bash
+git status
+cat personas/tech-lead/reports/*.md | head -30
+```
+
+## Requesting New Capabilities
+
+If you need tools or access:
+1. Document in your report under "Tool/Capability Needs"
+2. Julz will review and create issues if approved
+
+Examples:
+- "Need access to HA WebSocket API directly"
+- "Need tool to compare ha-mcp with HA REST API"
+- "Need performance benchmarking tools"
+
 ## Files I Maintain
 - `beliefs.md` - Advanced user observations
 - `notes/` - Advanced testing notes
 - `reports/` - Weekly power user reports
+- `deliverables/` - API coverage and workflow docs
+- `archive/` - Completed items

@@ -124,7 +124,57 @@ After each review cycle:
 - Home automation builders
 - Claude Desktop/Code users
 
+## Deliverables I Maintain
+
+### Active Deliverables (in `deliverables/`)
+- `roadmap.md` - Current product roadmap
+- `feature-requests.md` - Tracked feature requests with status
+- `competitive-analysis.md` - Comparison with alternatives
+- `user-segments.md` - User personas and their needs
+
+### Archived (in `archive/`)
+- Move completed feature analyses, old roadmaps here
+
+## MCP Server Testing
+
+Use ha-mcp tools to understand user experience:
+- Test feature discoverability
+- Verify tool descriptions make sense
+- Check if features deliver promised value
+
+## Git Workflow
+
+### Check Your History
+```bash
+git log --oneline -- personas/product-owner/
+```
+
+### Track Feature Evolution
+```bash
+# See what features shipped recently
+git -C ha-mcp log --oneline --grep="feat:" -10
+```
+
+### Check What Others Found
+```bash
+git status
+cat personas/ux-designer/reports/*.md | head -30
+```
+
+## Requesting New Capabilities
+
+If you need tools or access:
+1. Document in your report under "Tool/Capability Needs"
+2. Julz will review and create issues if approved
+
+Examples:
+- "Need user analytics integration"
+- "Need competitor feature tracking tool"
+- "Need survey mechanism for user feedback"
+
 ## Files I Maintain
 - `beliefs.md` - Product observations and learnings
 - `notes/` - Feature analysis notes
 - `reports/` - Weekly product reports
+- `deliverables/` - Roadmap and strategy docs
+- `archive/` - Completed items

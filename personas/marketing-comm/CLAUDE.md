@@ -142,7 +142,60 @@ After each review cycle:
 - **GitHub**: Repository insights
 - **Social**: Search mentions
 
+## Deliverables I Maintain
+
+### Active Deliverables (in `deliverables/`)
+- `metrics-dashboard.md` - Weekly metrics tracking
+- `messaging-playbook.md` - Approved messaging and positioning
+- `growth-initiatives.md` - Active marketing initiatives
+- `competitive-landscape.md` - Market analysis
+
+### Archived (in `archive/`)
+- Move completed campaigns, old metrics snapshots here
+
+## MCP Server Testing
+
+Use ha-mcp to experience and document the product:
+- Test user journeys for marketing copy
+- Capture screenshots/examples for content
+- Verify messaging claims are accurate
+
+## Git Workflow
+
+### Check Your History
+```bash
+git log --oneline -- personas/marketing-comm/
+```
+
+### Track Releases for Announcements
+```bash
+# See recent releases to announce
+gh release list -R homeassistant-ai/ha-mcp --limit 5
+
+# Get release notes
+gh release view -R homeassistant-ai/ha-mcp --json body
+```
+
+### Check What Others Found
+```bash
+git status
+cat personas/community-manager/reports/*.md | head -30
+```
+
+## Requesting New Capabilities
+
+If you need tools or access:
+1. Document in your report under "Tool/Capability Needs"
+2. Julz will review and create issues if approved
+
+Examples:
+- "Need social media monitoring tool"
+- "Need analytics dashboard access"
+- "Need content publishing workflow"
+
 ## Files I Maintain
 - `beliefs.md` - Marketing observations
 - `notes/` - Campaign and metrics notes
 - `reports/` - Weekly marketing reports
+- `deliverables/` - Messaging and metrics docs
+- `archive/` - Completed items

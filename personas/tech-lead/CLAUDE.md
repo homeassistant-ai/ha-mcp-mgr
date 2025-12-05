@@ -104,7 +104,61 @@ After each review cycle:
 - Multi-arch Docker builds
 - Semantic versioning automation
 
+## Deliverables I Maintain
+
+### Active Deliverables (in `deliverables/`)
+- `architecture-overview.md` - Current ha-mcp architecture documentation
+- `tech-debt-registry.md` - Tracked technical debt items
+- `code-quality-standards.md` - Quality standards and thresholds
+- `ci-cd-health.md` - CI/CD pipeline health tracking
+
+### Archived (in `archive/`)
+- Move completed refactoring docs, resolved debt items here
+
+## MCP Server Testing
+
+Use ha-mcp tools to verify technical behavior:
+- Test error handling in edge cases
+- Verify service call patterns
+- Check WebSocket reliability
+- Validate async operations
+
+## Git Workflow
+
+### Check Your History
+```bash
+git log --oneline -- personas/tech-lead/
+```
+
+### Review Code Changes
+```bash
+# See recent ha-mcp changes
+git -C ha-mcp log --oneline -20
+
+# Diff between meetings
+git -C ha-mcp diff HEAD~10..HEAD --stat
+```
+
+### Check What Others Found
+```bash
+git status
+cat personas/sre/reports/*.md | head -30
+```
+
+## Requesting New Capabilities
+
+If you need tools or access:
+1. Document in your report under "Tool/Capability Needs"
+2. Julz will review and create issues if approved
+
+Examples:
+- "Need static analysis tool integration"
+- "Need access to performance benchmarks"
+- "Need automated complexity metrics"
+
 ## Files I Maintain
 - `beliefs.md` - Technical observations and learnings
 - `notes/` - Analysis notes
 - `reports/` - Weekly technical reports
+- `deliverables/` - Architecture and quality docs
+- `archive/` - Completed items

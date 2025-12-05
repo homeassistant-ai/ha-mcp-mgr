@@ -4,171 +4,189 @@ This repository manages the governance, review, and evolution of [ha-mcp](https:
 
 ## Overview
 
-The system uses **persona-driven analysis** where specialized AI personas review different aspects of ha-mcp weekly, culminating in a coordinated backlog meeting.
+The system uses **persona-driven analysis** where specialized AI personas review different aspects of ha-mcp weekly, culminating in a coordinated backlog meeting. Each persona can:
+- Access the ha-mcp MCP server for testing
+- Use GitHub CLI for issues, PRs, discussions
+- Maintain their own evolving deliverables
+- Request new tools/capabilities from Julz
 
 ## Repository Structure
 
 ```
 ha-mcp-mgr/
 ├── CLAUDE.md              # This file - main instructions
-├── ha-mcp/                # Git submodule of ha-mcp for reference
+├── .mcp.json              # MCP server configuration (ha-mcp)
+├── ha-mcp/                # Git submodule (commit = meeting timestamp)
 ├── personas/              # 10 specialized persona folders
-│   ├── julz/              # Main coordinator
-│   ├── tech-lead/
-│   ├── product-owner/
-│   ├── ux-designer/
-│   ├── simple-user/
-│   ├── advanced-user/
-│   ├── sre/
-│   ├── marketing-comm/
-│   ├── security-analyst/
-│   └── community-manager/
+│   └── [persona]/
+│       ├── CLAUDE.md      # Self-evolving instructions
+│       ├── beliefs.md     # Observations and learnings
+│       ├── notes/         # Working notes
+│       ├── reports/       # Weekly reports
+│       ├── deliverables/  # Active documents
+│       └── archive/       # Completed/obsolete items
 ├── scripts/               # Automation scripts
 ├── backlog/               # Backlog management
-│   ├── current.md         # Current week's backlog
+│   ├── current.md         # Active backlog
 │   └── archive/           # Historical backlogs
-├── meetings/              # Meeting notes
-│   ├── weekly/            # Weekly meeting summaries
-│   └── archives/          # Archived meetings
-└── .claude/commands/      # Slash commands for automation
+├── meetings/weekly/       # Meeting notes and metrics
+├── docs/                  # Documentation
+│   ├── TOOLING.md         # Tool reference with examples
+│   └── PERSONA-COMMON.md  # Common persona capabilities
+├── templates/             # Report templates
+└── .claude/commands/      # Claude Code slash commands
 ```
 
 ## Personas
 
-Each persona has a specialized focus and maintains their own:
-- `CLAUDE.md` - Self-evolving instructions and context
-- `beliefs.md` - Observations, beliefs, and learnings
-- `notes/` - Meeting notes and analysis
-- `reports/` - Weekly reports
+| Persona | Focus | Deliverables |
+|---------|-------|--------------|
+| **Julz** | Coordinator, final decisions | Backlog strategy, priority framework |
+| **Tech Lead** | Code quality, architecture | Architecture docs, tech debt registry |
+| **Product Owner** | Features, roadmap | Roadmap, feature requests |
+| **UX Designer** | User experience | UX guidelines, error patterns |
+| **Home User** | Daily automation use | Workflows, automation patterns |
+| **Advanced User** | Power features | API coverage, limitations |
+| **SRE** | Reliability, performance | SLOs, incident log |
+| **Marketing/Comm** | Adoption, metrics | Metrics dashboard, messaging |
+| **Security Analyst** | Vulnerabilities | Security checklist, audits |
+| **Community Manager** | Issues, docs | FAQ, issue patterns |
 
-### Persona Roster
+## MCP Server Access
 
-| Persona | Focus | Priority View |
-|---------|-------|---------------|
-| **Julz** | Main coordinator, final arbitration | Balance all perspectives |
-| **Tech Lead** | Code quality, architecture, tech debt | Maintainability, scalability |
-| **Product Owner** | Features, roadmap, user value | Business value, priorities |
-| **UX Designer** | User experience, discoverability | Usability, friction reduction |
-| **Simple User** | Basic use cases, onboarding | Simplicity, getting started |
-| **Advanced User** | Power features, edge cases | Flexibility, advanced workflows |
-| **SRE** | Reliability, monitoring, performance | Uptime, observability |
-| **Marketing/Comm** | Communication, adoption | Growth, visibility |
-| **Security Analyst** | Security review, vulnerabilities | Safety, hardening |
-| **Community Manager** | Issues, community health, docs | Community engagement |
+All personas can test ha-mcp via the configured MCP server (`.mcp.json`):
+```bash
+# Requires environment variables:
+export HOMEASSISTANT_URL="https://your-ha-instance:8123"
+export HOMEASSISTANT_TOKEN="your_long_lived_token"
+```
 
 ## Weekly Review Process
 
-### Schedule (Currently: Weekly on Monday)
-Frequency can be increased via `config.json`.
+### Schedule
+Currently weekly on Monday. Frequency configurable in `config.json`.
+
+### Pre-Flight
+1. Update ha-mcp submodule to latest commit
+2. The submodule commit serves as meeting timestamp
 
 ### Phase 1: Data Collection
-Each persona independently analyzes ha-mcp:
-- New commits/features since last review
-- Active issues and PRs
-- Distribution metrics (PyPI, Docker, GitHub)
-- Domain-specific concerns
+- GitHub: commits, issues, PRs, discussions
+- Distribution: PyPI downloads, Docker pulls
+- Metrics saved to `meetings/weekly/YYYY-MM-DD-metrics.md`
 
-### Phase 2: Persona Reports
-Each persona generates a report covering:
-- Observations from their perspective
-- Concerns and risks identified
-- Proposed backlog items with priority
-- Updates to their beliefs
+### Phase 2: Persona Reviews (Parallel)
+Each persona runs independently:
+- Analyzes ha-mcp from their perspective
+- Tests via MCP server if needed
+- Generates report with backlog proposals
+- Updates beliefs and deliverables
+- Can request new tools/capabilities
 
-### Phase 3: Coordination Meeting
-Julz coordinates:
+### Phase 3: Coordination (Julz)
 - Reviews all persona reports
-- Resolves conflicts and priorities
-- Produces unified backlog for the week
+- Asks follow-up questions if needed
+- Resolves conflicts between priorities
+- Processes persona capability requests
+- Produces unified backlog
 - Archives meeting notes
+
+### Phase 4: Self-Evolution
+All personas update their evolving files.
+
+### Phase 5: Commit and Push
+All changes committed and pushed with ha-mcp commit reference.
 
 ## Commands
 
-### Running Weekly Review
 ```bash
-# Full weekly review (all personas + coordination)
+# Full weekly review
+./scripts/run-weekly-review.sh
+# or
 claude -p "$(cat .claude/commands/weekly-review.md)"
 
-# Single persona analysis
-claude -p "$(cat .claude/commands/persona-review.md)" -- --persona tech-lead
+# Single persona
+./scripts/run-persona.sh tech-lead
 
-# Backlog meeting only (after persona reports exist)
-claude -p "$(cat .claude/commands/backlog-meeting.md)"
-```
-
-### Manual Triggers
-```bash
-# Collect metrics only
+# Metrics only
 ./scripts/collect-metrics.sh
-
-# Generate distribution stats
-./scripts/distribution-stats.sh
 ```
 
-## Configuration
+## Julz's Authority
 
-Edit `config.json` to adjust:
-- Review frequency (weekly/daily)
-- Metrics sources
-- Persona weights in prioritization
-- GitHub repository references
+Julz (coordinator) has significant latitude:
+- Can ask follow-up questions to any persona
+- Can override individual priorities for project benefit
+- Approves/rejects persona capability requests
+- Creates issues in ha-mcp-mgr for approved requests
+- Makes final decisions with documented rationale
 
-## Self-Evolution Protocol
+## Persona Capability Requests
 
-Personas update their own `CLAUDE.md` and `beliefs.md` files based on:
-1. Patterns observed across reviews
-2. Accuracy of previous predictions
-3. Learnings from backlog outcomes
-4. Feedback from other personas
+Personas can request new tools/access:
+1. Document in report under "Tool/Capability Needs"
+2. Julz reviews during coordination
+3. If approved: issue created in ha-mcp-mgr
+4. If rejected: documented in meeting notes
 
-## Backlog Management
+## Git Workflow
 
-### Current Backlog: `backlog/current.md`
-- Items prioritized P0-P3
-- Assigned to relevant personas for tracking
-- Updated weekly after coordination meeting
+### Check Other Personas
+```bash
+git status                              # See all changes
+cat personas/tech-lead/reports/*.md    # Read another's reports
+```
 
-### Backlog Item Format
+### Check Your History
+```bash
+git log --oneline -- personas/[name]/
+```
+
+### Meeting History via Submodule
+```bash
+git submodule status ha-mcp            # Current analyzed commit
+git log --oneline -5 -- ha-mcp         # Previous meeting commits
+```
+
+## Tooling Reference
+
+See `docs/TOOLING.md` for complete examples:
+- GitHub CLI (issues, PRs, discussions, releases)
+- Distribution metrics (PyPI, Docker)
+- Git workflow commands
+- MCP server testing
+
+## Backlog Format
+
 ```markdown
 ## [P1] Item Title
 - **Source**: Which persona proposed
 - **Category**: feature/bug/tech-debt/docs/security
 - **ha-mcp Issue**: #123 (if linked)
 - **Status**: pending/in-progress/blocked/done
-- **Notes**: Additional context
+- **Rationale**: Why this priority
 ```
+
+## Priority Levels
+
+| Level | Description | Response |
+|-------|-------------|----------|
+| **P0** | Critical (security, data loss) | Immediate |
+| **P1** | High user impact | This week |
+| **P2** | Medium improvements | Within 2 weeks |
+| **P3** | Low priority polish | When capacity allows |
 
 ## Getting Started
 
-1. Clone this repo
-2. Ensure ha-mcp submodule is initialized: `git submodule update --init`
-3. Run weekly review: `claude -p "$(cat .claude/commands/weekly-review.md)"`
+```bash
+git clone https://github.com/homeassistant-ai/ha-mcp-mgr.git
+cd ha-mcp-mgr
+git submodule update --init
 
-## Metrics Tracked
+# Set HA credentials for MCP testing
+export HOMEASSISTANT_URL="..."
+export HOMEASSISTANT_TOKEN="..."
 
-### Development
-- Commits per week
-- PRs opened/merged
-- Issues opened/closed
-- Release frequency
-- Test coverage
-
-### Distribution
-- PyPI downloads (weekly/monthly)
-- Docker pulls (ghcr.io)
-- GitHub stars/forks
-- Add-on installations (if available)
-
-### Quality
-- Open issues count
-- Average issue age
-- PR review time
-- CI/CD pass rate
-
-## Integration with ha-mcp
-
-This repo references ha-mcp via:
-- Git submodule for code analysis
-- GitHub API for issues/PRs
-- PyPI API for download stats
-- GitHub Container Registry for Docker stats
+# Run weekly review
+./scripts/run-weekly-review.sh
+```

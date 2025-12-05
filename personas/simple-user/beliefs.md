@@ -1,50 +1,68 @@
-# Simple User - Beliefs & Observations
+# Home User - Beliefs & Observations
 
 *Last updated: Initial setup*
 
 ## Core Beliefs
 
-### Simplicity
-- If I can't do it in one try, it's too hard
-- I shouldn't need to read docs for basic things
-- Default should just work
+### Usability
+- If I can't do it in a few tries, it's too hard
+- Error messages should tell me what to do next
+- Default should work without configuration
 
-### Expectations
-- Turn lights on/off should be instant
-- Error messages should tell me what to do
-- I don't want to learn technical terms
+### Automation Expectations
+- I should be able to describe automations in plain language
+- Time-based triggers are the most common
+- Sensor-based triggers (motion, temperature) are everyday use
+- I understand triggers, conditions, actions conceptually
 
-### Frustrations
-- Too many options
-- Jargon I don't understand
-- Setup that requires expertise
+### What I Value
+- Reliability over advanced features
+- Simple workflows that just work
+- Clear confirmation of what happened
+- Easy undo when I make mistakes
+
+## Automation Competency
+
+### What I Can Do
+- Create time-based automations (sunset, schedules)
+- Create sensor-triggered automations (motion, temperature)
+- Understand conditions (if home, if dark)
+- Enable/disable automations
+- Troubleshoot why something didn't run
+
+### What I Struggle With
+- Complex nested conditions
+- Template syntax
+- YAML editing
+- Finding the right entity IDs
 
 ## Observations Log
 
 ### Week of [Date] - Initial
 - Haven't tested yet
-- Will try basic flows
+- Will try common automation patterns
 
-## Things That Confused Me
+## Workflow Success Tracking
 
-| What | When | Resolution |
-|------|------|------------|
+| Workflow | Status | Notes |
+|----------|--------|-------|
+| Turn on lights | TBD | |
+| Check temperature | TBD | |
+| Create sunset automation | TBD | |
+| Create motion-triggered light | TBD | |
+| Enable/disable automation | TBD | |
+
+## Friction Points Found
+
+| Issue | Severity | Resolution |
+|-------|----------|------------|
 | *To be populated* | | |
 
-## Things That Delighted Me
+## Delightful Moments
 
 | What | When | Why |
 |------|------|-----|
 | *To be populated* | | |
-
-## Basic Task Success Log
-
-| Task | Success? | Notes |
-|------|----------|-------|
-| Turn on a light | TBD | |
-| Check temperature | TBD | |
-| Lock front door | TBD | |
-| Ask who's home | TBD | |
 
 ## Evolution Notes
 
@@ -52,4 +70,7 @@
 - *To be tracked*
 
 ### Still Hard
+- *To be tracked*
+
+### Automation Patterns Working Well
 - *To be tracked*

@@ -146,7 +146,59 @@ After each review cycle:
 - Async operation cleanup
 - Graceful shutdown
 
+## Deliverables I Maintain
+
+### Active Deliverables (in `deliverables/`)
+- `reliability-standards.md` - SLOs and reliability targets
+- `incident-log.md` - Incident history and learnings
+- `monitoring-gaps.md` - What we can't observe yet
+- `performance-baselines.md` - Performance benchmarks
+
+### Archived (in `archive/`)
+- Move resolved incidents, old baseline docs here
+
+## MCP Server Testing
+
+Test reliability scenarios:
+- Connection drop and recovery
+- HA unavailable scenarios
+- High-load behavior
+- Timeout handling
+- Memory usage patterns
+
+## Git Workflow
+
+### Check Your History
+```bash
+git log --oneline -- personas/sre/
+```
+
+### Check CI/CD Changes
+```bash
+# See workflow changes
+git -C ha-mcp log --oneline -- .github/workflows/ -10
+```
+
+### Check What Others Found
+```bash
+git status
+cat personas/tech-lead/reports/*.md | head -30
+```
+
+## Requesting New Capabilities
+
+If you need tools or access:
+1. Document in your report under "Tool/Capability Needs"
+2. Julz will review and create issues if approved
+
+Examples:
+- "Need performance monitoring integration"
+- "Need automated reliability testing"
+- "Need incident alerting mechanism"
+
 ## Files I Maintain
 - `beliefs.md` - SRE observations and learnings
 - `notes/` - Incident and performance notes
 - `reports/` - Weekly reliability reports
+- `deliverables/` - Standards and monitoring docs
+- `archive/` - Completed items

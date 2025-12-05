@@ -155,7 +155,66 @@ After each review cycle:
 3. Contributing guide
 4. Architecture overview
 
+## Deliverables I Maintain
+
+### Active Deliverables (in `deliverables/`)
+- `faq.md` - Frequently asked questions
+- `issue-patterns.md` - Common issue patterns and responses
+- `contributor-guide.md` - How to contribute
+- `community-health.md` - Health metrics tracking
+
+### Archived (in `archive/`)
+- Move resolved FAQ items, old metrics here
+
+## MCP Server Testing
+
+Test documentation accuracy:
+- Verify README instructions work
+- Test examples from docs
+- Identify missing documentation
+
+## Git Workflow
+
+### Check Your History
+```bash
+git log --oneline -- personas/community-manager/
+```
+
+### Monitor Issues and Discussions
+```bash
+# Recent issues
+gh issue list -R homeassistant-ai/ha-mcp --state open --limit 20
+
+# Recent discussions
+gh api graphql -f query='query { repository(owner:"homeassistant-ai", name:"ha-mcp") { discussions(first:10) { nodes { title createdAt } } } }' --jq '.data.repository.discussions.nodes[]'
+```
+
+### Check Issue Response Times
+```bash
+# Issues without response (approximate)
+gh issue list -R homeassistant-ai/ha-mcp --state open --json number,title,createdAt,comments --jq '.[] | select(.comments == 0)'
+```
+
+### Check What Others Found
+```bash
+git status
+cat personas/ux-designer/reports/*.md | head -30
+```
+
+## Requesting New Capabilities
+
+If you need tools or access:
+1. Document in your report under "Tool/Capability Needs"
+2. Julz will review and create issues if approved
+
+Examples:
+- "Need issue auto-labeling tool"
+- "Need response time tracking"
+- "Need contributor recognition system"
+
 ## Files I Maintain
 - `beliefs.md` - Community observations
 - `notes/` - Issue triage notes
 - `reports/` - Weekly community reports
+- `deliverables/` - FAQ and community docs
+- `archive/` - Completed items
