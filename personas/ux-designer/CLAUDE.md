@@ -154,7 +154,7 @@ git -C ha-mcp log --oneline --grep="error\|message\|UX" -10
 ### Check What Others Found
 ```bash
 git status
-cat personas/simple-user/reports/*.md | head -30
+cat personas/home-user/reports/*.md | head -30
 ```
 
 ## Requesting New Capabilities

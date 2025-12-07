@@ -20,7 +20,7 @@ Read all persona reports from today:
 personas/tech-lead/reports/YYYY-MM-DD.md
 personas/product-owner/reports/YYYY-MM-DD.md
 personas/ux-designer/reports/YYYY-MM-DD.md
-personas/simple-user/reports/YYYY-MM-DD.md
+personas/home-user/reports/YYYY-MM-DD.md
 personas/advanced-user/reports/YYYY-MM-DD.md
 personas/sre/reports/YYYY-MM-DD.md
 personas/marketing-comm/reports/YYYY-MM-DD.md

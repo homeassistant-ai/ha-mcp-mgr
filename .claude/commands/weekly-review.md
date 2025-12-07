@@ -98,7 +98,7 @@ Personas to run (in parallel):
 1. tech-lead
 2. product-owner
 3. ux-designer
-4. simple-user (now "Home User")
+4. home-user
 5. advanced-user
 6. sre
 7. marketing-comm

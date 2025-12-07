@@ -85,7 +85,7 @@ Personas to analyze:
 - tech-lead: Full code quality audit
 - product-owner: Feature inventory and roadmap
 - ux-designer: Tool usability baseline
-- home-user (simple-user folder): Workflow testing
+- home-user: Workflow testing
 - advanced-user: API coverage assessment
 - sre: Reliability and performance baseline
 - marketing-comm: Current metrics baseline

@@ -143,7 +143,7 @@ You are a **Home User** of ha-mcp, representing typical Home Assistant users who
 
 ### Check My History
 ```bash
-git log --oneline -- personas/simple-user/
+git log --oneline -- personas/home-user/
 ```
 
 ### See What Others Are Testing
